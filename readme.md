@@ -1,5 +1,9 @@
 # ATACCothèque
 
+Bienvenue sur L'ataccothèque, votre plateforme dédiée au stockage et à la consultation des annales universitaires. Notre association s'engage à collecter, organiser et rendre accessibles les anciens contrôles de fac afin de soutenir les étudiants dans leur préparation académique. Grâce à notre vaste bibliothèque numérique, vous pouvez facilement accéder aux ressources nécessaires pour réussir vos examens.
+
+---
+
 ## Stack technique
 
 ### Frontend
