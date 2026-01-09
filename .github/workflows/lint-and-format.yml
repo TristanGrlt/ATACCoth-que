@@ -1,0 +1,70 @@
+name: Lint and Format Code
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Client (React/TypeScript)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: |
+            app/client/package-lock.json
+            app/server/package-lock.json
+
+      - name: Install client dependencies
+        working-directory: ./app/client
+        run: npm ci
+
+      - name: Lint client code
+        working-directory: ./app/client
+        run: npm run lint
+
+      - name: Format client code
+        working-directory: ./app/client
+        run: |
+          npx prettier --write "src/**/*.{ts,tsx,js,jsx,json,css,md}"
+
+      # Server (Node.js)
+      - name: Install server dependencies
+        working-directory: ./app/server
+        run: npm ci
+
+      - name: Lint server code
+        working-directory: ./app/server
+        run: npm run lint
+
+      - name: Format server code
+        working-directory: ./app/server
+        run: |
+          npx prettier --write "**/*.{js,json,md}"      # Commit changes if any
+      - name: Check for changes
+        id: verify_diff
+        run: |
+          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push changes
+        if: steps.verify_diff.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "chore: auto-format code with prettier [skip ci]"
+          git push

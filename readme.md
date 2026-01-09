@@ -41,6 +41,38 @@ Les routes suivantes sont disponibles :
 - `/api/` pour le _backend_ (API)
 - `/file/` pour l'accès aux annales
 
+## 🎨 Qualité du code
+
+Le projet utilise **ESLint** et **Prettier** pour maintenir un code propre et cohérent.
+
+### Linting et Formatage automatique
+
+Une GitHub Action s'exécute automatiquement lors des pushs et PRs vers `main` pour :
+
+- ✅ Vérifier le code avec ESLint
+- ✅ Formater automatiquement le code avec Prettier
+- ✅ Commit les changements si nécessaire
+
+### Scripts disponibles
+
+**Client** (`app/client/`) :
+
+```bash
+npm run lint          # Vérifie les erreurs
+npm run lint:fix      # Corrige automatiquement
+npm run format        # Formate avec Prettier
+npm run format:check  # Vérifie sans modifier
+```
+
+**Serveur** (`app/server/`) :
+
+```bash
+npm run lint          # Vérifie les erreurs
+npm run lint:fix      # Corrige automatiquement
+npm run format        # Formate avec Prettier
+npm run format:check  # Vérifie sans modifier
+```
+
 ## 🚀 Démarrage rapide
 
 ### Prérequis
